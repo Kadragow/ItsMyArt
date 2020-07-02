@@ -25,7 +25,8 @@
                     <li sec:authorize="!isAuthenticated()"><a href="/login" class="text-white">Log in</a> </li>
                     <li sec:authorize="isAuthenticated()"><a href="/logout" class="text-white">Logout</a> </li>
                     <li sec:authorize="!isAuthenticated()"><a href="/registration" class="text-white">Registration</a> </li>
-                    <li sec:authorize="isAuthenticated()"><a href="/admin/home" class="text-white">Profile</a> </li>
+                    <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/home" class="text-white">Profile</a> </li>
+                    <li sec:authorize="hasAuthority('USER')"><a href="/user/home" class="text-white">Profile</a> </li>
                 </ul>
             </div>
         </div>
