@@ -6,9 +6,16 @@
 </head>
 <body>
     <th:block th:include="/_menu"></th:block>
-
+<div class="container"></div>
     <div sec:authorize="isAuthenticated()">
         Hey! Remember to log out!
+    </div>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        Logged as admin
+    </div>
+    <div sec:authorize="hasAuthority('USER')">
+        Logged as user
     </div>
 </body>
 <th:block th:include="/_foot"></th:block>

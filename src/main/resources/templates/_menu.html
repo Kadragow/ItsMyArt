@@ -22,10 +22,10 @@
             <div class="col-sm-3 offset-md-3 py-4">
                 <h4 class="text-white" style="text-align: right;">Menu</h4>
                 <ul class="list-unstyled" style="text-align: right;">
-                    <li><a href="/login" class="text-white">Log in</a> </li>
+                    <li sec:authorize="!isAuthenticated()"><a href="/login" class="text-white">Log in</a> </li>
                     <li sec:authorize="isAuthenticated()"><a href="/logout" class="text-white">Logout</a> </li>
-                    <li><a href="/registration" class="text-white">Registration</a> </li>
-                    <li><a href="/" class="text-white">Main page</a> </li>
+                    <li sec:authorize="!isAuthenticated()"><a href="/registration" class="text-white">Registration</a> </li>
+                    <li sec:authorize="isAuthenticated()"><a href="/admin/home" class="text-white">Profile</a> </li>
                 </ul>
             </div>
         </div>
