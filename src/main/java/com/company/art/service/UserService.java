@@ -40,6 +40,7 @@ public class UserService {
         user.setActive(true);
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setBanned(false);
         return userRepository.save(user);
     }
 

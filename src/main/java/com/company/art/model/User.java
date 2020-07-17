@@ -46,5 +46,9 @@ public class User {
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    @OneToMany(mappedBy = "post_user")
+    private Set<Post> posts;
+    @Column(name = "is_banned")
+    private boolean isBanned;
 
 }
