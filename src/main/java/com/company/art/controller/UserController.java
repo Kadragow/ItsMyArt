@@ -22,6 +22,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         modelAndView.addObject("userMessage","Welcome home " + user.getUserName());
+        modelAndView.addObject("userNumberOfPosts", "Times you post something: " + user.getPosts().size());
         modelAndView.setViewName("user/home");
         return modelAndView;
     }

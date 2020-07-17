@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link th:href="@{/css/modal.css}" type="text/css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
 <body>
 <th:block th:include="/_menu"></th:block>
-<div>
-    <p class="admin-message-text text-center" th:utext="${userMessage}"></p>
+<div id="newPostModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Hello in modal</p>
+    </div>
 </div>
+<div>
+    <p class="text-center" th:utext="${userMessage}"></p>
+    <button class="btn btn-primary btn-block" id="addPost">Add new post</button>
+<!--    <form class="text-center" method="get" action="/">-->
+<!--    </form>-->
+    <p class="text-center" th:utext="${userNumberOfPosts}"></p>
+</div>
+
+<script>
+var modal = document.getElementById("newPostModal");
+
+var btn = document.getElementById("addPost");
+
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 </body>
 </html>
