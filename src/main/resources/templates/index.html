@@ -19,8 +19,15 @@
         Logged as user
     </div>
 
-    <tr th:each="i : ${img}">
-        <td><img th:attr="src=@{|data:image/jpeg;base64,${i}|}"></td>
+<!--    <tr th:each="i : ${img}">-->
+<!--        <td><img th:attr="src=@{|data:image/jpeg;base64,${i}|}"></td>-->
+<!--    </tr>-->
+
+    <tr th:each="post : ${posts}">
+        <td><img th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
+                 th:tittle=${post.tittle}
+                 th:alt=${post.description}></td>
+
     </tr>
 
 </body>

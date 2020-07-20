@@ -1,6 +1,8 @@
 package com.company.art.controller;
 
+import com.company.art.dto.PostDTO;
 import com.company.art.model.Post;
+import com.company.art.model.User;
 import com.company.art.service.PostService;
 import com.company.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class IndexController {
@@ -30,11 +30,14 @@ public class IndexController {
         Post post = postService.findPostById(8);
         List<Post> posts = postService.getAllPosts();
         List<String> converted = new ArrayList<>();
+        List<PostDTO> postDTOList = new ArrayList<>();
         for (Post p : posts){
+            postDTOList.add(new PostDTO(p,Base64.getEncoder().encodeToString(p.getData())));
             converted.add(Base64.getEncoder().encodeToString(p.getData()));
         }
         String img = Base64.getEncoder().encodeToString(post.getData());
         modelAndView.addObject("img",converted);
+        modelAndView.addObject("posts",postDTOList);
         modelAndView.setViewName("index");
         return modelAndView;
     }
