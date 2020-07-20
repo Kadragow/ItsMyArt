@@ -8,6 +8,9 @@ import org.hibernate.annotations.ManyToAny;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -24,9 +27,9 @@ public class Post {
     @JoinColumn(name = "post_user_id")
     private User postUser;
     @CreationTimestamp
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
-    private Date date;
+    private Calendar date;
     @Column(name = "imagine_name")
     private String imagineName;
     @Column(name = "imagine_type")
@@ -48,15 +51,19 @@ public class Post {
         this.id = id;
     }
 
+    public User getAuthor(){
+        return this.postUser;
+    }
+
     public void setPostUser(User user){
         this.postUser = user;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 

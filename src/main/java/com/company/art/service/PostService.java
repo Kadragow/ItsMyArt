@@ -10,6 +10,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -39,6 +41,13 @@ public class PostService {
         }catch (IOException e){
             throw new Exception("Could not save the post!");
         }
+    }
 
+    public Post findPostById(Integer id){
+        return postRepository.findById(id);
+    }
+
+    public List<Post> getAllPosts(){
+        return postRepository.findAll();
     }
 }

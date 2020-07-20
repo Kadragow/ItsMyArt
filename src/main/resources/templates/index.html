@@ -19,8 +19,10 @@
         Logged as user
     </div>
 
-    <img src="images/unnamed.jpg">
-    <img src="images/unnamed.jpg">
+    <tr th:each="i : ${img}">
+        <td><img th:attr="src=@{|data:image/jpeg;base64,${i}|}"></td>
+    </tr>
+
 </body>
 <th:block th:include="/_foot"></th:block>
 </html>
