@@ -20,4 +20,8 @@ public class UserDTO {
         this.lastName = user.getLastName();
         this.name = user.getName();
     }
+
+    public String toString(){
+        return this.name + " " + this.lastName;
+    }
 }
