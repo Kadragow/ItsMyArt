@@ -30,7 +30,7 @@ public class PostDTO {
 
     public PostDTO(Post post, String convertedImg){
         this.id = post.getId();
-        this.userDTO = new UserDTO();
+        this.userDTO = new UserDTO(post.getAuthor());
         this.calendar = post.getDate();
         this.description = post.getDescription();
         this.tittle = post.getTittle();

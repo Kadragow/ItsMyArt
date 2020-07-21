@@ -27,17 +27,10 @@ public class IndexController {
     @RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView();
-        Post post = postService.findPostById(8);
-        List<Post> posts = postService.getAllPosts();
-        List<String> converted = new ArrayList<>();
-        List<PostDTO> postDTOList = new ArrayList<>();
-        for (Post p : posts){
-            postDTOList.add(new PostDTO(p,Base64.getEncoder().encodeToString(p.getData())));
-            converted.add(Base64.getEncoder().encodeToString(p.getData()));
-        }
-        String img = Base64.getEncoder().encodeToString(post.getData());
-        modelAndView.addObject("img",converted);
+
+        List<PostDTO> postDTOList = postService.getAllEncodedPostsDTO();
         modelAndView.addObject("posts",postDTOList);
+
         modelAndView.setViewName("index");
         return modelAndView;
     }

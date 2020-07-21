@@ -1,5 +1,6 @@
 package com.company.art.service;
 
+import com.company.art.dto.PostDTO;
 import com.company.art.model.Post;
 import com.company.art.repository.PostRepository;
 import com.company.art.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -49,5 +51,13 @@ public class PostService {
 
     public List<Post> getAllPosts(){
         return postRepository.findAll();
+    }
+
+    public List<PostDTO> getAllEncodedPostsDTO(){
+        List<PostDTO> dtos = new ArrayList<>();
+        for(Post post : getAllPosts()){
+            dtos.add(new PostDTO(post, Base64.getEncoder().encodeToString(post.getData())));
+        }
+        return dtos;
     }
 }
