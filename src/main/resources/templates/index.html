@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>It's My Art</title>
+
+
 </head>
 <body>
     <th:block th:include="/_menu"></th:block>
-
 <div class="container"></div>
     <div sec:authorize="isAuthenticated()">
         Hey! Remember to log out!
@@ -34,19 +35,19 @@
         <div th:each="post : ${posts}" class="col-md-4">
             <div class="card mb-4 shadow-sm">
                 <div align="center"><h2 th:text="${post.tittle}"></h2></div>
-                <img th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
+                <img data-enlargable th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
                      th:tittle=${post.tittle}
                      th:alt=${post.description}
-                     style="margin: 0 auto; max-height: 300px; height: 100%; width: 100%; object-fit: contain">
+                     style="cursor: zoom-in; margin: 0 auto; max-height: 300px; height: 100%; width: 100%; object-fit: contain">
                 <div class="card-body">
                     <p class="card-text" th:text="${post.description}"></p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
+<!--                        <div class="btn-group">-->
+<!--                            <button type="button" class="btn btn-sm btn-outline-secondary" name="View" th:value="${post.id}">View</button>-->
+<!--                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+<!--                        </div>-->
                         <small class="text-muted" th:text="${post.calendar.getTime()}"></small>
-                        <small class="text-muted" th:text="${post.getUserDTO().toString()}"></small>
+                        <small class="text-muted" th:text="by + ' ' + ${post.getUserDTO().toString()}"></small>
 
                     </div>
                 </div>
@@ -54,6 +55,39 @@
         </div>
     </div>
 
+<script type="text/javascript">
+$('img[data-enlargable]').addClass('img-enlargable').click(function(){
+    var src = $(this).attr('src');
+    var modal;
+    function removeModal(){ modal.remove(); $('body').off('keyup.modal-close'); }
+    modal = $('<div>').css({
+        background: 'RGBA(0,0,0,.5) url('+src+') no-repeat center',
+        backgroundSize: 'contain',
+        width:'100%', height:'100%',
+        position:'fixed',
+        zIndex:'10000',
+        top:'0', left:'0',
+        cursor: 'zoom-out'
+    }).click(function(){
+        removeModal();
+    }).appendTo('body');
+    //handling ESC
+    $('body').on('keyup.modal-close', function(e){
+      if(e.key==='Escape'){ removeModal(); }
+    });
+});
+<!--    var btns = document.getElementsByName("View");-->
+
+<!--    for(var i = 0; i < btns.length; i++){-->
+<!--        var btn = btns[i];-->
+<!--        btn.addEventListener('click', () => {-->
+<!--            alert(btn.value);-->
+<!--        });-->
+<!--        btn.onclick = function() {-->
+<!--            alert(btn.value);-->
+<!--        }-->
+<!--    }-->
+</script>
 
 </body>
 <th:block th:include="/_foot"></th:block>

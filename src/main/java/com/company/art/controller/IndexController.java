@@ -29,6 +29,7 @@ public class IndexController {
         ModelAndView modelAndView = new ModelAndView();
 
         List<PostDTO> postDTOList = postService.getAllEncodedPostsDTO();
+        Collections.reverse(postDTOList);
         modelAndView.addObject("posts",postDTOList);
 
         modelAndView.setViewName("index");

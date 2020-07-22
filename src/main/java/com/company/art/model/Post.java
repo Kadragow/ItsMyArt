@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -36,9 +37,11 @@ public class Post {
     private String imagineType;
     @Lob
     private byte[] data;
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
+    @Length(max = 500)
     private String description;
-    @Column(name = "tittle")
+    @Column(name = "tittle", length = 30)
+    @Length(max = 30)
     private String tittle;
     @Transient
     private MultipartFile file;
