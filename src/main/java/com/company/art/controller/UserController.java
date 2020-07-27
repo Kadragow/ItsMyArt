@@ -1,5 +1,6 @@
 package com.company.art.controller;
 
+import com.company.art.dto.PostDTO;
 import com.company.art.model.Post;
 import com.company.art.model.User;
 import com.company.art.service.PostService;
@@ -18,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collections;
+import java.util.List;
+
 @Controller
 @RequestMapping("user")
 public class UserController {
@@ -32,9 +36,12 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         Post post = new Post();
+        List<PostDTO> postsToDisplay = postService.getUserAllEncodedPostsDTO(user);
+        Collections.reverse(postsToDisplay);
         modelAndView.addObject("post", post);
         modelAndView.addObject("userMessage","Welcome home " + user.getUserName());
         modelAndView.addObject("userNumberOfPosts", "Times you post something: " + user.getPosts().size());
+        modelAndView.addObject("posts", postsToDisplay);
         modelAndView.setViewName("user/home");
         return modelAndView;
     }

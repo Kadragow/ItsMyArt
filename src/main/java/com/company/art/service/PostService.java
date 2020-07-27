@@ -2,6 +2,7 @@ package com.company.art.service;
 
 import com.company.art.dto.PostDTO;
 import com.company.art.model.Post;
+import com.company.art.model.User;
 import com.company.art.repository.PostRepository;
 import com.company.art.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,18 @@ public class PostService {
     public List<PostDTO> getAllEncodedPostsDTO(){
         List<PostDTO> dtos = new ArrayList<>();
         for(Post post : getAllPosts()){
+            dtos.add(new PostDTO(post, Base64.getEncoder().encodeToString(post.getData())));
+        }
+        return dtos;
+    }
+
+    public List<Post> getUserAllPosts(User user){
+        return postRepository.findByPostUser_Id(user.getId());
+    }
+
+    public List<PostDTO> getUserAllEncodedPostsDTO(User user){
+        List<PostDTO> dtos = new ArrayList<>();
+        for(Post post : getUserAllPosts(user)){
             dtos.add(new PostDTO(post, Base64.getEncoder().encodeToString(post.getData())));
         }
         return dtos;
