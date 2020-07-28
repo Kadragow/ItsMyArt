@@ -14,11 +14,13 @@ public class UserDTO {
     private int id;
     private String name;
     private String lastName;
+    private String userName;
 
     public UserDTO(User user){
         this.id = user.getId();
         this.lastName = user.getLastName();
         this.name = user.getName();
+        this.userName = user.getUserName();
     }
 
     public String toString(){

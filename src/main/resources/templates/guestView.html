@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.userName}"></title>
+</head>
+<body>
+<th:block th:include="/_menu"></th:block>
+<div style="text-align:center">
+    <h1 th:text="Profile + ' ' + ${user.userName} + ' - ' + ${user.name} + ' ' + ${user.lastName}"></h1>
+</div>
+<div class="column" style="margin: 0 auto">
+    <div th:each="p : ${posts}" class="col-md-4" style="margin: 0 auto">
+        <div class="card mb-4 shadow-sm">
+            <div align="center"><h2 th:text="${p.tittle}"></h2></div>
+            <img data-enlargable th:attr="src=@{|data:image/jpeg;base64,${p.convertedImg}|}"
+                 th:tittle=${p.tittle}
+                 th:alt=${p.description}
+                 style="margin: 0 auto; max-height: 300px; height: 100%; width: 100%; object-fit: contain">
+            <div class="card-body">
+                <p class="card-text" th:text="${p.description}"></p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" name="Comment" th:value="${p.id}">Comment</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Like</button>
+                    </div>
+                    <small class="text-muted" th:text="${p.calendar.getTime()}"></small>
+                    <small class="text-muted" th:text="by + ' ' + ${p.getUserDTO().toString()}"></small>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

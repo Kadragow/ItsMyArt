@@ -7,6 +7,7 @@ import com.company.art.service.PostService;
 import com.company.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,23 @@ public class IndexController {
         modelAndView.addObject("posts",postDTOList);
 
         modelAndView.setViewName("index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/guestView", method = RequestMethod.GET)
+    public ModelAndView guestView(@RequestParam("username") String username){
+        User user = userService.findUserByUserName(username);
+        System.out.println(user.getUserName());
+        System.out.println(user.getId());
+        List<PostDTO> postToDisplay = postService.getUserAllEncodedPostsDTO(user);
+        System.out.println(postToDisplay.size());
+        Collections.reverse(postToDisplay);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("posts", postToDisplay);
+        modelAndView.setViewName("guestView");
+
         return modelAndView;
     }
 

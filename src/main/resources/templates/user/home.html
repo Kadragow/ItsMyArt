@@ -50,8 +50,8 @@
         <div class="card mb-4 shadow-sm">
             <div align="center"><h2 th:text="${p.tittle}"></h2></div>
             <img data-enlargable th:attr="src=@{|data:image/jpeg;base64,${p.convertedImg}|}"
-                 th:tittle=${post.tittle}
-                 th:alt=${post.description}
+                 th:tittle=${p.tittle}
+                 th:alt=${p.description}
                  style="margin: 0 auto; max-height: 300px; height: 100%; width: 100%; object-fit: contain">
             <div class="card-body">
                 <p class="card-text" th:text="${p.description}"></p>
