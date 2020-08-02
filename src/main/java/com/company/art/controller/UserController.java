@@ -57,11 +57,7 @@ public class UserController {
 
     @PostMapping(value="/home/addPost")
     public String addPost(Post post, RedirectAttributes redirectAttributes) throws Exception {
-
-        System.out.println("hej");
         postService.savePost(post);
-        System.out.println("hej2");
-
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());

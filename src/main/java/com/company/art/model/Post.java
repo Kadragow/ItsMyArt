@@ -1,5 +1,6 @@
 package com.company.art.model;
 
+import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -43,6 +46,9 @@ public class Post {
     @Column(name = "tittle", length = 30)
     @Length(max = 30)
     private String tittle;
+    @Nullable
+    @OneToMany(mappedBy = "likedPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PostLikes> postLikes;
     @Transient
     private MultipartFile file;
 
@@ -116,5 +122,13 @@ public class Post {
 
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    public Set<PostLikes> getPostLikes() {
+        return postLikes;
+    }
+
+    public void setPostLikes(Set<PostLikes> postLikes) {
+        this.postLikes = postLikes;
     }
 }

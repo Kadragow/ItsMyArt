@@ -33,7 +33,7 @@
     <br/>
     <div class="row">
         <div th:each="post : ${posts}" class="col-md-4" >
-            <div class="card mb-4 shadow-sm" >
+            <div class="card mb-4 shadow-sm" style="background:#ecf2f9">
                 <div align="center"><h2 th:text="${post.tittle}"></h2></div>
                 <img data-enlargable th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
                      th:tittle=${post.tittle}
@@ -44,8 +44,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-secondary" name="Comment" th:value="${post.id}">Comment</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Like</button>
+                            <form action="#" th:action="@{|/likePost?id=${post.id}|}" method="post"><button type="submit" class="btn btn-sm btn-outline-secondary" >Like</button></form>
+<!--                            th:onclick="|location.href='/likePost?id=${post.id}'|"-->
                         </div>
+                        <small class="text-muted" th:text="${post.postLikes}"></small>
                         <small class="text-muted" th:text="${post.calendar.getTime()}"></small>
                         <a th:href="@{|/guestView?username=${post.getUserDTO().userName}|}"><small class="text-muted" th:text="by + ' ' + ${post.getUserDTO().toString()}"></small></a>
 
@@ -76,6 +78,9 @@ $('img[data-enlargable]').addClass('img-enlargable').click(function(){
       if(e.key==='Escape'){ removeModal(); }
     });
 });
+
+
+
 <!--    var btns = document.getElementsByName("View");-->
 
 <!--    for(var i = 0; i < btns.length; i++){-->

@@ -19,6 +19,7 @@ public class PostDTO {
     private String description;
     private String tittle;
     private String convertedImg;
+    private Integer postLikes;
 
     public PostDTO(Post post){
         this.id = post.getId();
@@ -26,6 +27,7 @@ public class PostDTO {
         this.calendar = post.getDate();
         this.description = post.getDescription();
         this.tittle = post.getTittle();
+        this.postLikes = post.getPostLikes().size();
     }
 
     public PostDTO(Post post, String convertedImg){
@@ -35,5 +37,6 @@ public class PostDTO {
         this.description = post.getDescription();
         this.tittle = post.getTittle();
         this.convertedImg = convertedImg;
+        this.postLikes = post.getPostLikes().size();
     }
 }

@@ -50,6 +50,8 @@ public class User {
     private Set<Role> roles;
     @OneToMany(mappedBy = "postUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Post> posts;
+    @OneToMany(mappedBy = "userThatLike", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PostLikes> postsLiked;
     @Column(name = "is_banned")
     private boolean isBanned;
 

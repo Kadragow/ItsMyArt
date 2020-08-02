@@ -2,12 +2,18 @@ package com.company.art.controller;
 
 import com.company.art.dto.PostDTO;
 import com.company.art.model.Post;
+import com.company.art.model.PostLikes;
 import com.company.art.model.User;
+import com.company.art.service.PostLikesService;
 import com.company.art.service.PostService;
 import com.company.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +30,8 @@ public class IndexController {
     UserService userService;
     @Autowired
     PostService postService;
+    @Autowired
+    PostLikesService postLikesService;
 
     @RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView index(){
@@ -40,10 +48,7 @@ public class IndexController {
     @RequestMapping(value = "/guestView", method = RequestMethod.GET)
     public ModelAndView guestView(@RequestParam("username") String username){
         User user = userService.findUserByUserName(username);
-        System.out.println(user.getUserName());
-        System.out.println(user.getId());
         List<PostDTO> postToDisplay = postService.getUserAllEncodedPostsDTO(user);
-        System.out.println(postToDisplay.size());
         Collections.reverse(postToDisplay);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -61,5 +66,19 @@ public class IndexController {
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         response.getOutputStream().write(post.getData());
         response.getOutputStream().close();
+    }
+
+    @PostMapping(value = "/likePost")
+    public String likeThisPost(@RequestParam("id") Integer postId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        Post post = postService.findPostById(postId);
+        PostLikes postLikes = new PostLikes();
+        postLikes.setUserThatLike(user);
+        postLikes.setLikedPost(post);
+        System.out.println("Hello");
+        postLikesService.save(postLikes);
+        System.out.println("hi");
+        return "redirect:/index";
     }
 }
