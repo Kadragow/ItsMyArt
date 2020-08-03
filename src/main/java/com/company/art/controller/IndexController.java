@@ -36,11 +36,18 @@ public class IndexController {
     @RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView();
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        int userId = -1;
+        if(auth!=null){
+            User user = userService.findUserByUserName(auth.getName());
+            if(user!=null)
+                userId=user.getId();
+        }
         List<PostDTO> postDTOList = postService.getAllEncodedPostsDTO();
         Collections.reverse(postDTOList);
         modelAndView.addObject("posts",postDTOList);
-
+        modelAndView.addObject("postLikesService",postLikesService);
+        modelAndView.addObject("userId",userId);
         modelAndView.setViewName("index");
         return modelAndView;
     }
@@ -73,12 +80,18 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         Post post = postService.findPostById(postId);
+        if (postLikesService.isUserLiking(user.getId(),postId))
+            return "redirect:/index";
         PostLikes postLikes = new PostLikes();
         postLikes.setUserThatLike(user);
         postLikes.setLikedPost(post);
-        System.out.println("Hello");
         postLikesService.save(postLikes);
-        System.out.println("hi");
+        return "redirect:/index";
+    }
+
+    @PostMapping(value = "/unlikePost")
+    public String unlikeThisPost(@RequestParam("postId") Integer postId, @RequestParam("userId") Integer userId){
+        postLikesService.deleteUserLike(postId,userId);
         return "redirect:/index";
     }
 }

@@ -17,8 +17,15 @@ public class PostLikesService {
 
     }
 
+    public long deleteUserLike(Integer postId, Integer userId){
+        return postLikesRepository.deleteByLikedPost_IdAndUserThatLike_id(postId, userId);
+    }
+
     public Integer getPostAmountOfLikes(Integer postId){
         return postLikesRepository.findByLikedPost_Id(postId).size();
     }
 
+    public boolean isUserLiking(Integer userId, Integer postId){
+        return !postLikesRepository.findByLikedPost_IdAndUserThatLike_id(postId, userId).isEmpty();
+    }
 }
