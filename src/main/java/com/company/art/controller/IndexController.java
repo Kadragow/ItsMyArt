@@ -57,10 +57,18 @@ public class IndexController {
         User user = userService.findUserByUserName(username);
         List<PostDTO> postToDisplay = postService.getUserAllEncodedPostsDTO(user);
         Collections.reverse(postToDisplay);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        int userId = -1;
+        if(auth!=null){
+            User logged = userService.findUserByUserName(auth.getName());
+            if(logged!=null)
+                userId=logged.getId();
+        }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.addObject("posts", postToDisplay);
+        modelAndView.addObject("postLikesService",postLikesService);
+        modelAndView.addObject("userId",userId);
         modelAndView.setViewName("guestView");
 
         return modelAndView;
@@ -76,22 +84,23 @@ public class IndexController {
     }
 
     @PostMapping(value = "/likePost")
-    public String likeThisPost(@RequestParam("id") Integer postId){
+    public String likeThisPost(@RequestParam("id") Integer postId, HttpServletRequest request){
+        String re = "redirect:" + request.getHeader("Referer");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         Post post = postService.findPostById(postId);
         if (postLikesService.isUserLiking(user.getId(),postId))
-            return "redirect:/index";
+            return re;
         PostLikes postLikes = new PostLikes();
         postLikes.setUserThatLike(user);
         postLikes.setLikedPost(post);
         postLikesService.save(postLikes);
-        return "redirect:/index";
+        return re;
     }
 
     @PostMapping(value = "/unlikePost")
-    public String unlikeThisPost(@RequestParam("postId") Integer postId, @RequestParam("userId") Integer userId){
+    public String unlikeThisPost(@RequestParam("postId") Integer postId, @RequestParam("userId") Integer userId, HttpServletRequest request){
         postLikesService.deleteUserLike(postId,userId);
-        return "redirect:/index";
+        return "redirect:" + request.getHeader("Referer");
     }
 }
