@@ -19,8 +19,8 @@ html, body {
     margin-left: 5%;
     width: 25%;
     background-color: white;
-    border: 5px outset #1C6EA4;
-    border-radius: 40px 40px 40px 40px;
+    border: 8px ridge rgba(56,153,164,0.75);
+    border-radius: 17px;
 }
 
 .sticky {
