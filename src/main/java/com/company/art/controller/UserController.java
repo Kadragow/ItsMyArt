@@ -39,7 +39,7 @@ public class UserController {
         List<PostDTO> postsToDisplay = postService.getUserAllEncodedPostsDTO(user);
         Collections.reverse(postsToDisplay);
         modelAndView.addObject("post", post);
-        modelAndView.addObject("userMessage","Welcome home " + user.getUserName());
+        modelAndView.addObject("userMessage","Welcome " + user.getUserName() + "!");
         modelAndView.addObject("userNumberOfPosts", "Times you post something: " + user.getPosts().size());
         modelAndView.addObject("posts", postsToDisplay);
         modelAndView.setViewName("user/home");
@@ -58,14 +58,7 @@ public class UserController {
     @PostMapping(value="/home/addPost")
     public String addPost(Post post, RedirectAttributes redirectAttributes) throws Exception {
         postService.savePost(post);
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserName(auth.getName());
-        Post newPost = new Post();
-        modelAndView.addObject("post", newPost);
-        modelAndView.addObject("userMessage","Welcome home " + user.getUserName());
-        modelAndView.addObject("userNumberOfPosts", "Times you post something: " + user.getPosts());
-        modelAndView.setViewName("user/home");
+
         return "redirect:/user/home";
     }
 }

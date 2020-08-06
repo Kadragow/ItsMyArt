@@ -6,53 +6,27 @@
 
 
 </head>
-<body style="background-color:#212529;">
-    <th:block th:include="/_menu"></th:block>
+<body>
+<th:block th:include="/_menu"></th:block>
 <div class="container"></div>
-    <div sec:authorize="isAuthenticated()">
-        Hey! Remember to log out!
-    </div>
-
-    <div sec:authorize="hasAuthority('ADMIN')">
-        Logged as admin
-    </div>
-    <div sec:authorize="hasAuthority('USER')">
-        Logged as user
-    </div>
-
-<!--    <tr th:each="i : ${img}">-->
-<!--        <td><img th:attr="src=@{|data:image/jpeg;base64,${i}|}"></td>-->
-<!--    </tr>-->
-
-<!--    <tr th:each="post : ${posts}">-->
-<!--        <td><img th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"-->
-<!--                 th:tittle=${post.tittle}-->
-<!--                 th:alt=${post.description}-->
-<!--                 width="auto" height="300"></td>-->
-<!--    </tr>-->
     <div class="row">
         <div th:each="post : ${posts}" class="col-md-4" >
             <div class="card mb-4 shadow-sm " style="background:#ecf2f9; height: 99%">
                 <div align="center"><h2 th:text="${post.tittle}"></h2></div>
-                <img data-enlargable th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
+                <img class="post-view" data-enlargable th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
                      th:tittle=${post.tittle}
                      th:alt=${post.description}
-                     style="cursor: zoom-in; margin: 0 auto; max-height: 300px; height: 100%; width: 100%; object-fit: contain">
+                    style="cursor zoom-in;">
                 <div class="card-body">
                     <p class="card-text" th:text="${post.description}"></p>
-
-
                 </div>
                 <div style="padding: 1.25rem">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <!--                            <button type="button" class="btn btn-sm btn-outline-secondary" name="Comment" th:value="${post.id}">Comment</button>-->
                             <form th:if="${postLikesService.isUserLiking(userId,post.id)}" action="#" th:action="@{|/unlikePost?postId=${post.id}&userId=${userId}|}" method="post"><button type="submit" class="btn btn-sm btn-primary" th:text="'Liked! ' + ${post.postLikes}">Like</button></form>
                             <form th:unless="${postLikesService.isUserLiking(userId,post.id)}" action="#" th:action="@{|/likePost?id=${post.id}|}" method="post"><button type="submit" class="btn btn-sm btn-outline-secondary" th:text="'Like! ' + ${post.postLikes}">Like</button></form>
 
-                            <!--                            th:onclick="|location.href='/likePost?id=${post.id}'|"-->
                         </div>
-                        <!--                        <small class="text-muted" th:text="${post.postLikes}"></small>-->
                         <small class="text-muted" th:text="${post.calendar.getTime()}"></small>
                         <a th:href="@{|/guestView?username=${post.getUserDTO().userName}|}"><small class="text-muted" th:text="by + ' ' + ${post.getUserDTO().toString()}"></small></a>
 
@@ -83,20 +57,6 @@ $('img[data-enlargable]').addClass('img-enlargable').click(function(){
       if(e.key==='Escape'){ removeModal(); }
     });
 });
-
-
-
-<!--    var btns = document.getElementsByName("View");-->
-
-<!--    for(var i = 0; i < btns.length; i++){-->
-<!--        var btn = btns[i];-->
-<!--        btn.addEventListener('click', () => {-->
-<!--            alert(btn.value);-->
-<!--        });-->
-<!--        btn.onclick = function() {-->
-<!--            alert(btn.value);-->
-<!--        }-->
-<!--    }-->
 </script>
 
 </body>
