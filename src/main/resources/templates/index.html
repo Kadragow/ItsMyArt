@@ -16,7 +16,7 @@
                 <img class="post-view" data-enlargable th:attr="src=@{|data:image/jpeg;base64,${post.convertedImg}|}"
                      th:tittle=${post.tittle}
                      th:alt=${post.description}
-                    style="cursor zoom-in;">
+                    style="cursor: zoom-in;">
                 <div class="card-body">
                     <p class="card-text" th:text="${post.description}"></p>
                 </div>

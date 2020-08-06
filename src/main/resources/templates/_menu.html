@@ -2,46 +2,51 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script th:src="@{/js/bootstrap.bundle.js}"></script>
+
 <script>window.jQuery || document.write('<script src="@{/js/jquery.slim.min.js}"><\/script>')</script>
 <link th:href="@{/css/bootstrap.css}" type="text/css" rel="stylesheet">
 <link th:href="@{/css/album.css}" type="text/css" rel="stylesheet">
 <link th:href="@{/css/page-style.css}" type="text/css" rel="stylesheet">
 
 
-<div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 col-md-6 py-4">
-                <h4 class="text-white">Contact</h4>
-                <ul class="list-unstyled">
-                    <li><img src="https://img.icons8.com/fluent/48/000000/linkedin.png" height="18" width="18"/><a href="https://www.linkedin.com/in/kamil-blanik/" class="text-white"> LinkedIn</a></li>
-                    <li><img src="https://img.icons8.com/material-sharp/24/000000/github.png" height="18" width="18"/><a href="https://github.com/Kadragow" class="text-white"> GitHub</a></li>
-                    <li><img src="https://img.icons8.com/small/16/000000/new-post.png" height="18" width="18"/><a class="text-white"> kamil.lukasz.blanik@gmail.com</a></li>
-                </ul>
-<!--                <h4 class="text-white">About me</h4>-->
-<!--                <p class="text-muted">Hi! I'm Kamil.</p>-->
-            </div>
-            <div class="col-sm-3 offset-md-3 py-4">
-                <h4 class="text-white" style="text-align: right;">Menu</h4>
-                <ul class="list-unstyled" style="text-align: right;">
-                    <li sec:authorize="!isAuthenticated()"><a href="/login" class="text-white">Log in</a> </li>
-                    <li sec:authorize="isAuthenticated()"><a href="/logout" class="text-white">Logout</a> </li>
-                    <li sec:authorize="!isAuthenticated()"><a href="/registration" class="text-white">Registration</a> </li>
-                    <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/home" class="text-white">Profile</a> </li>
-                    <li sec:authorize="hasAuthority('USER')"><a href="/user/home" class="text-white">Profile</a> </li>
-                </ul>
+
+<div class="navbar sticky-top navbar-dark bg-dark shadow-sm">
+    <div class="collapse bg-dark" id="navbarHeader" style="width:100%;">
+        <div class="container" style="width:100%;">
+            <div class="row" style="width:100%;">
+                <div class="col-sm-8 col-md-6 py-4">
+                    <h4 class="text-white">Contact</h4>
+                    <ul class="list-unstyled">
+                        <li><img src="https://img.icons8.com/fluent/48/000000/linkedin.png" height="18" width="18"/><a href="https://www.linkedin.com/in/kamil-blanik/" class="text-white"> LinkedIn</a></li>
+                        <li><img src="https://img.icons8.com/material-sharp/24/000000/github.png" height="18" width="18"/><a href="https://github.com/Kadragow" class="text-white"> GitHub</a></li>
+                        <li><img src="https://img.icons8.com/small/16/000000/new-post.png" height="18" width="18"/><a class="text-white"> kamil.lukasz.blanik@gmail.com</a></li>
+                    </ul>
+                    <!--                <h4 class="text-white">About me</h4>-->
+                    <!--                <p class="text-muted">Hi! I'm Kamil.</p>-->
+                </div>
+                <div class="col-sm-3 offset-md-3 py-4">
+                    <h4 class="text-white" style="text-align: right;">Menu</h4>
+                    <ul class="list-unstyled" style="text-align: right;">
+                        <li sec:authorize="!isAuthenticated()"><a href="/login" class="text-white">Log in</a> </li>
+                        <li sec:authorize="isAuthenticated()"><a href="/logout" class="text-white">Logout</a> </li>
+                        <li sec:authorize="!isAuthenticated()"><a href="/registration" class="text-white">Registration</a> </li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/home" class="text-white">Profile</a> </li>
+                        <li sec:authorize="hasAuthority('USER')"><a href="/user/home" class="text-white">Profile</a> </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container d-flex justify-content-between">
         <a href="/" class="navbar-brand d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             <strong>It's My Art!</strong>
         </a>
+        <a sec:authorize="isAuthenticated()" class="navbar-brand d-flex align-items-center" th:text="'Logged as ' + ${loggedUsername}" href="/user/home"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
 </div>
+<br/>
+<br/>

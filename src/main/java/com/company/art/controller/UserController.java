@@ -40,7 +40,7 @@ public class UserController {
         Collections.reverse(postsToDisplay);
         modelAndView.addObject("post", post);
         modelAndView.addObject("userMessage","Welcome " + user.getUserName() + "!");
-        modelAndView.addObject("userNumberOfPosts", "Times you post something: " + user.getPosts().size());
+        modelAndView.addObject("userNumberOfPosts", "Times you posted your art: " + user.getPosts().size());
         modelAndView.addObject("posts", postsToDisplay);
         modelAndView.setViewName("user/home");
         return modelAndView;
