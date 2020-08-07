@@ -84,4 +84,31 @@ public class PostService {
         }
 
     }
+
+    public boolean updatePostTitle(Integer postId, String editedTitle) {
+        try {
+            postRepository.updatePostTitle(postId, editedTitle);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public boolean updatePostDescription(Integer postId, String postDescription) {
+        try {
+            postRepository.updatePostDescription(postId, postDescription);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public boolean updatePostImg(Integer postId, Post editedPost) {
+        try {
+            postRepository.updatePostImg(postId, editedPost.getFile().getBytes());
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

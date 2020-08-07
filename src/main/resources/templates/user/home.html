@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link th:href="@{/css/modal.css}" type="text/css" rel="stylesheet">
+
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -44,7 +45,55 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 
     </div>
+</div>
 
+<div id="editTitleModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form th:object="${post}" method="post" class="form-horizontal" id="editTitle">
+            <h2>Edit title</h2>
+            <br/>
+            <div class="form-group" align="center">
+                <div class="col-sm-9">
+                    <input th:field="*{tittle}" type="text" placeholder="Title (30)" class="form-control" maxlength="30" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-secondary">Edit</button>
+        </form>
+    </div>
+</div>
+
+<div id="editImgModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form th:object="${post}" method="post" class="form-horizontal"
+              id="editImg" enctype="multipart/form-data">
+            <h2>Edit image</h2>
+            <br/>
+            <div class="form-group" align="center">
+                <div class="col-sm-9">
+                    <input type="file" th:field="*{file}" class="form-control-file" accept="image/*" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-secondary">Edit</button>
+        </form>
+    </div>
+</div>
+
+<div id="editDescriptionModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form th:object="${post}" method="post" class="form-horizontal" id="editDescription">
+            <h2>Edit description</h2>
+            <br/>
+            <div class="form-group" align="center">
+                <div class="col-sm-9">
+                    <input th:field="*{description}" type="text" placeholder="Description (500)" class="form-control" maxlength="500" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-secondary">Edit</button>
+        </form>
+    </div>
 </div>
 
 <br/>
@@ -61,18 +110,21 @@
 <div class="column" style="margin: 0 auto">
     <div th:each="p : ${posts}" class="col-md-4" style="margin: 0 auto">
         <div class="card mb-4 shadow-sm" style="background:#ecf2f9;">
-            <div align="center"><h2 th:text="${p.tittle}"></h2></div>
+            <div id="edit-title"><button class="btn btn-warning btn-xs" th:value="${p.id}">edit title</button></div>
+            <div class="container" align="center">
+                <h2  th:text="${p.tittle}"></h2>
+            </div>
+            <div id="edit-img"><button class="btn btn-warning btn-xs" th:value="${p.id}">edit image</button></div>
             <img class="post-view" data-enlargable th:attr="src=@{|data:image/jpeg;base64,${p.convertedImg}|}"
-                 th:tittle=${p.tittle}
+            th:tittle=${p.tittle}
                  th:alt=${p.description}>
+            <div id="edit-description"><button type="button" class="btn btn-warning btn-xs" th:value="${p.id}">edit description</button></div>
             <div class="card-body">
                 <p class="card-text" th:text="${p.description}"></p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <div id="postEditButtons" class="btn-group">
-                    </div>
-                        <button type="button" class="btn btn-sm btn-warning">Edit</button>
+
                     <div id="postsDelButtons" class="btn-group">
-                        <button type="button" class="btn btn-sm btn-danger btn-delete" th:value="${p.id}">Delete</button>
+                        <button type="button" class="btn btn-danger btn-sm btn-delete" th:value="${p.id}">Delete</button>
                     </div>
                     <small class="text-muted" th:text="${p.calendar.getTime()}"></small>
                     <small class="text-muted" th:text="by + ' ' + ${p.getUserDTO().toString()}"></small>
@@ -91,11 +143,19 @@ var modal = document.getElementById("newPostModal");
 
 var modal2 = document.getElementById("deleteConfirmModal");
 
+var modal3 = document.getElementById("editTitleModal");
+var modal4 = document.getElementById("editImgModal");
+var modal5 = document.getElementById("editDescriptionModal");
+
 var btn = document.getElementById("addPost");
 
 var span = document.getElementsByClassName("close")[0];
 
 var span2 = document.getElementsByClassName("close")[1];
+
+var span3 = document.getElementsByClassName("close")[2];
+var span4 = document.getElementsByClassName("close")[3];
+var span5 = document.getElementsByClassName("close")[4];
 
 btn.onclick = function() {
       modal.style.display = "block";
@@ -109,6 +169,16 @@ span2.onclick = function() {
       modal2.style.display = "none";
 }
 
+span3.onclick = function() {
+      modal2.style.display = "none";
+}
+span4.onclick = function() {
+      modal2.style.display = "none";
+}
+span5.onclick = function() {
+      modal2.style.display = "none";
+}
+
 window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
@@ -116,14 +186,40 @@ window.onclick = function(event) {
       if (event.target == modal2) {
         modal2.style.display = "none";
       }
+      if (event.target == modal3) {
+        modal3.style.display = "none";
+      }
+      if (event.target == modal3) {
+        modal4.style.display = "none";
+      }
+      if (event.target == modal3) {
+        modal5.style.display = "none";
+      }
 }
 
-$('#postsDelButtons').on('click', 'button', function(){
+$('document.body, #postsDelButtons').on('click', 'button', function(){
     var myvalue = this.value;
     var href = "/user/delete?id=" + myvalue;
     modal2.style.display = "block";
     $('#deleteConfirmModal #btnDeleteYes').attr('href',href);
 });
 
+$('document.body, #edit-title').on('click', 'button', function(){
+    var action = "/user/editTitle?id=" + this.value;
+    modal3.style.display = "block";
+    $('#editTitleModal #editTitle').attr('action',action);
+});
+
+$('document.body, #edit-img').on('click', 'button', function(){
+    var action = "/user/editImg?id=" + this.value;
+    modal4.style.display = "block";
+    $('#editImgModal #editImg').attr('action',action);
+});
+
+$('document.body, #edit-description').on('click', 'button', function(){
+    var action = "/user/editDescription?id=" + this.value;
+    modal5.style.display = "block";
+    $('#editDescriptionModal #editDescription').attr('action',action);
+});
 
 </script>
