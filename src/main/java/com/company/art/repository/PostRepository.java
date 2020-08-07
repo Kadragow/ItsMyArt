@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, String> {
-    Post findById(Integer id);
+public interface PostRepository extends JpaRepository<Post, Integer> {
+    //Post findById(Integer id);
     List<Post> findByPostUser_Id(Integer id);
 }

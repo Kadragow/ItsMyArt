@@ -47,7 +47,7 @@ public class PostService {
     }
 
     public Post findPostById(Integer id){
-        return postRepository.findById(id);
+        return postRepository.findById(id).get();
     }
 
     public List<Post> getAllPosts(){
@@ -67,10 +67,21 @@ public class PostService {
     }
 
     public List<PostDTO> getUserAllEncodedPostsDTO(User user){
+
         List<PostDTO> dtos = new ArrayList<>();
         for(Post post : getUserAllPosts(user)){
             dtos.add(new PostDTO(post, Base64.getEncoder().encodeToString(post.getData())));
         }
         return dtos;
+    }
+
+    public boolean deletePostById(Integer id){
+        try{
+            postRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 }

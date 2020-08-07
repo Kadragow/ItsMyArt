@@ -61,4 +61,10 @@ public class UserController {
 
         return "redirect:/user/home";
     }
+
+    @RequestMapping(value="/delete")
+    public String deletePost(@RequestParam("id") Integer postId) {
+        postService.deletePostById(postId);
+        return "redirect:/user/home";
+    }
 }

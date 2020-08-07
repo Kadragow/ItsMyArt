@@ -7,6 +7,7 @@
 </head>
 <body>
 <th:block th:include="/_menu"></th:block>
+
 <div id="newPostModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -34,6 +35,18 @@
         </form>
     </div>
 </div>
+
+<div id="deleteConfirmModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <a href="" type="button" class="btn btn-danger" id="btnDeleteYes">Yes</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+
+    </div>
+
+</div>
+
 <br/>
 <div class="profile">
     <h1 class="text-center" th:utext="${userMessage}"></h1>
@@ -55,9 +68,11 @@
             <div class="card-body">
                 <p class="card-text" th:text="${p.description}"></p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
+                    <div id="postEditButtons" class="btn-group">
+                    </div>
                         <button type="button" class="btn btn-sm btn-warning">Edit</button>
-                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                    <div id="postsDelButtons" class="btn-group">
+                        <button type="button" class="btn btn-sm btn-danger btn-delete" th:value="${p.id}">Delete</button>
                     </div>
                     <small class="text-muted" th:text="${p.calendar.getTime()}"></small>
                     <small class="text-muted" th:text="by + ' ' + ${p.getUserDTO().toString()}"></small>
@@ -68,26 +83,47 @@
     </div>
 </div>
 
+</body>
+</html>
+
 <script>
 var modal = document.getElementById("newPostModal");
+
+var modal2 = document.getElementById("deleteConfirmModal");
 
 var btn = document.getElementById("addPost");
 
 var span = document.getElementsByClassName("close")[0];
 
+var span2 = document.getElementsByClassName("close")[1];
+
 btn.onclick = function() {
-  modal.style.display = "block";
+      modal.style.display = "block";
 }
 
 span.onclick = function() {
-  modal.style.display = "none";
+      modal.style.display = "none";
+}
+
+span2.onclick = function() {
+      modal2.style.display = "none";
 }
 
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+      if (event.target == modal2) {
+        modal2.style.display = "none";
+      }
 }
+
+$('#postsDelButtons').on('click', 'button', function(){
+    var myvalue = this.value;
+    var href = "/user/delete?id=" + myvalue;
+    modal2.style.display = "block";
+    $('#deleteConfirmModal #btnDeleteYes').attr('href',href);
+});
+
+
 </script>
-</body>
-</html>
