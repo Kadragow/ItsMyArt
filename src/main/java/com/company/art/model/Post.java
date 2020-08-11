@@ -51,7 +51,7 @@ public class Post {
     @OneToMany(mappedBy = "likedPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PostLikes> postLikes;
     @Transient
-    @NotNull
+//    @NotNull
     private MultipartFile file;
 
     public Integer getId() {

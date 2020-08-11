@@ -18,7 +18,7 @@
                  th:tittle=${p.tittle}
                  th:alt=${p.description}>
             <div class="card-body">
-                <p class="card-text" th:text="${p.description}"></p>
+                <p class="card-text text-justify" th:text="${p.description}"></p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <form th:if="${postLikesService.isUserLiking(userId,p.id)}" action="#" th:action="@{|/unlikePost?postId=${p.id}&userId=${userId}|}" method="post"><button type="submit" class="btn btn-sm btn-primary" th:text="'Liked! ' + ${p.postLikes}">Like</button></form>
