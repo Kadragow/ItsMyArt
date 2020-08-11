@@ -3,6 +3,7 @@ package com.company.art;
 import com.company.art.model.Post;
 import com.company.art.model.User;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class FakeDataSet {
@@ -21,14 +22,16 @@ public class FakeDataSet {
     public static Post getFakePost(){
         Post post = new Post();
         post.setTittle("Title");
-        post.setId(3);
+        post.setId(1);
         post.setImagineType("image/png");
-        post.setPostUser(FakeDataSet.getFakeUser());
+        User user = new User();
+        user.setId(11);
+        post.setPostUser(user);
         post.setData(new byte[5]);
         post.setImagineName("Image");
-        post.setDate(new GregorianCalendar());
+        post.setDate(Calendar.getInstance());
         post.setDescription("Description");
+
         return post;
     }
-
 }

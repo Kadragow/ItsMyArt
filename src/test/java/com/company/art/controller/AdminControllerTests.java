@@ -18,8 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 public class AdminControllerTests {
     @Autowired
     private UserService userService;
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
     @Test
     public void contextLoads(){
         assertThat(userService).isNotNull();
@@ -29,8 +29,9 @@ public class AdminControllerTests {
     public void homeTest(){
         //TODO
 //        userService = mock(UserService.class);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/admin/home");
-        when(userService.findUserByUserName(anyString())).thenReturn(FakeDataSet.getFakeUser());
+
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/admin/home");
+//        when(userService.findUserByUserName(anyString())).thenReturn(FakeDataSet.getFakeUser());
 
     }
 }

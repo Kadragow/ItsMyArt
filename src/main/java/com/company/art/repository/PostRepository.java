@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PostRepository extends  JpaRepository<Post, Integer> {
     //Post findById(Integer id);
     List<Post> findByPostUser_Id(Integer id);
 
