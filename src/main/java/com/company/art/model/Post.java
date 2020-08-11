@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -50,6 +51,7 @@ public class Post {
     @OneToMany(mappedBy = "likedPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PostLikes> postLikes;
     @Transient
+    @NotNull
     private MultipartFile file;
 
     public Integer getId() {
