@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
 public class FakeDataSet {
     public static User getFakeUser(){
         User user = new User();
-        user.setId(11);
+//        user.setId(11);
         user.setActive(true);
         user.setUserName("TheTest");
         user.setPassword("Password");
@@ -24,9 +24,6 @@ public class FakeDataSet {
         post.setTittle("Title");
         post.setId(1);
         post.setImagineType("image/png");
-        User user = new User();
-        user.setId(11);
-        post.setPostUser(user);
         post.setData(new byte[5]);
         post.setImagineName("Image");
         post.setDate(Calendar.getInstance());

@@ -31,44 +31,52 @@ public class PostRepositoryTests {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
-    @Ignore
+//    @Ignore
     public void findByPostUser_Id_One(){
         //arrange
         Post post = FakeDataSet.getFakePost();
         Integer expected = 1;
         entityManager.merge(FakeDataSet.getFakeUser());
         entityManager.flush();
+        User savedUser = userRepository.findByUserName(FakeDataSet.getFakeUser().getUserName());
+        Integer generatedId = savedUser.getId();
+        post.setPostUser(savedUser);
         entityManager.merge(post);
         entityManager.flush();
 
         //act
-        List<Post> found = postRepository.findByPostUser_Id(FakeDataSet.getFakeUser().getId());
+        List<Post> found = postRepository.findByPostUser_Id(generatedId);
         //assert
         assertThat(found.size()).isEqualTo(expected);
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void findByPostUser_Id_Many(){
         //arrange
         Post post1 = FakeDataSet.getFakePost();
         Post post2 = FakeDataSet.getFakePost();
-        post2.setId(2);
         Post post3 = FakeDataSet.getFakePost();
+        post2.setId(2);
         post3.setId(3);
         Integer expected = 3;
         entityManager.merge(FakeDataSet.getFakeUser());
         entityManager.flush();
-
+        User savedUser = userRepository.findByUserName(FakeDataSet.getFakeUser().getUserName());
+        Integer generatedId = savedUser.getId();
+        post1.setPostUser(savedUser);
+        post2.setPostUser(savedUser);
+        post3.setPostUser(savedUser);
         entityManager.merge(post1);
-
         entityManager.merge(post2);
-
         entityManager.merge(post3);
         entityManager.flush();
         //act
-        List<Post> found = postRepository.findByPostUser_Id(FakeDataSet.getFakeUser().getId());
+        List<Post> found = postRepository.findByPostUser_Id(generatedId);
         //assert
         assertThat(found.size()).isEqualTo(expected);
     }
@@ -82,5 +90,62 @@ public class PostRepositoryTests {
         List<Post> found = postRepository.findByPostUser_Id(FakeDataSet.getFakeUser().getId());
         //assert
         assertThat(found.size()).isEqualTo(expected);
+    }
+
+    @Test
+    public void updatePostTitleTest(){
+        //arrange
+        String newTitle = "Totally new title";
+        entityManager.merge(FakeDataSet.getFakeUser());
+        entityManager.flush();
+        Post post = FakeDataSet.getFakePost();
+        User savedUser = userRepository.findByUserName(FakeDataSet.getFakeUser().getUserName());
+        post.setPostUser(savedUser);
+        entityManager.merge(post);
+        entityManager.flush();
+        Integer generatedId = postRepository.findByPostUser_Id(savedUser.getId()).get(0).getId();
+        //act
+        postRepository.updatePostTitle(generatedId, newTitle);
+        String postTitle = postRepository.findById(generatedId).get().getTittle();
+        //assert
+        assertThat(postTitle).isEqualTo(newTitle);
+    }
+
+    @Test
+    public void updatePostImgTest(){
+        //arrange
+        byte[] newImg = new byte[111];
+        entityManager.merge(FakeDataSet.getFakeUser());
+        entityManager.flush();
+        Post post = FakeDataSet.getFakePost();
+        User savedUser = userRepository.findByUserName(FakeDataSet.getFakeUser().getUserName());
+        post.setPostUser(savedUser);
+        entityManager.merge(post);
+        entityManager.flush();
+        Integer generatedId = postRepository.findByPostUser_Id(savedUser.getId()).get(0).getId();
+        //act
+        postRepository.updatePostImg(generatedId, newImg);
+        byte[] postImg = postRepository.findById(generatedId).get().getData();
+        //assert
+        assertThat(postImg).isEqualTo(newImg);
+    }
+
+    @Test
+    public void updatePostDescriptionTest(){
+        //arrange
+        String newDescription = "Totally new description";
+        entityManager.merge(FakeDataSet.getFakeUser());
+        entityManager.flush();
+        Post post = FakeDataSet.getFakePost();
+        User savedUser = userRepository.findByUserName(FakeDataSet.getFakeUser().getUserName());
+        post.setPostUser(savedUser);
+        entityManager.merge(post);
+        entityManager.flush();
+        Integer generatedId = postRepository.findByPostUser_Id(savedUser.getId()).get(0).getId();
+        //act
+        postRepository.updatePostDescription(generatedId, newDescription);
+        String postDescription = postRepository.findById(generatedId).get().getDescription();
+        //assert
+        assertThat(postDescription).isEqualTo(newDescription);
     }
 }
