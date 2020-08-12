@@ -127,4 +127,85 @@ public class PostServiceTests {
         assertThat(actual).isFalse();
     }
 
+    @Test
+    public void updatePostTitle_Success(){
+        //arrange
+        Integer testedId = 1;
+        String newTitle = "new one";
+        doNothing().when(postRepository).updatePostTitle(anyInt(), anyString());
+        //act
+        boolean result = postService.updatePostTitle(testedId, newTitle);
+        //assert
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void updatePostTitle_Fail(){
+        //arrange
+        Integer testedId = 1;
+        String newTitle = "new one";
+        doThrow(EntityNotFoundException.class).when(postRepository).updatePostTitle(anyInt(), anyString());
+        //act
+        boolean result = postService.updatePostTitle(testedId, newTitle);
+        //assert
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void updatePostDescription_Success(){
+        //arrange
+        Integer testedId = 1;
+        String newDes = "new one";
+        doNothing()
+                .when(postRepository)
+                .updatePostDescription(anyInt(), anyString());
+        //act
+        boolean result = postService.updatePostDescription(testedId, newDes);
+        //assert
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void updatePostDescription_Fail(){
+        //arrange
+        Integer testedId = 1;
+        String newDes = "new one";
+        doThrow(EntityNotFoundException.class)
+                .when(postRepository)
+                .updatePostDescription(anyInt(), anyString());
+        //act
+        boolean result = postService.updatePostDescription(testedId, newDes);
+        //assert
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void updatePostImg_Success(){
+        //arrange
+        Integer testedId = 1;
+        Post post = FakeDataSet.getFakePost();
+        MockMultipartFile file = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
+        post.setFile(file);
+        doNothing()
+                .when(postRepository)
+                .updatePostImg(anyInt(), any(byte[].class));
+        //act
+        boolean result = postService.updatePostImg(testedId, post);
+        //assert
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void updatePostImg_Fail(){
+        //arrange
+        Integer testedId = 1;
+        Post post = FakeDataSet.getFakePost();
+        doThrow(EntityNotFoundException.class)
+                .when(postRepository)
+                .updatePostImg(anyInt(), any(byte[].class));
+        //act
+        boolean result = postService.updatePostImg(testedId, post);
+        //assert
+        assertThat(result).isFalse();
+    }
 }
