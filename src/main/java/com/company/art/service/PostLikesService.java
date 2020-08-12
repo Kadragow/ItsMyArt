@@ -12,13 +12,17 @@ public class PostLikesService {
 
     public PostLikes save(PostLikes postLikes){
         if(postLikes.getUserThatLike() == null) return null;
-        postLikesRepository.save(postLikes);
-        return postLikes;
+        return postLikesRepository.save(postLikes);
 
     }
 
-    public long deleteUserLike(Integer postId, Integer userId){
-        return postLikesRepository.deleteByLikedPost_IdAndUserThatLike_id(postId, userId);
+    public boolean deleteUserLike(Integer postId, Integer userId){
+        try {
+            postLikesRepository.deleteByLikedPost_IdAndUserThatLike_id(postId, userId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public Integer getPostAmountOfLikes(Integer postId){
