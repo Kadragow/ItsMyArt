@@ -71,9 +71,9 @@ public class PostRepositoryTests {
         post1.setPostUser(savedUser);
         post2.setPostUser(savedUser);
         post3.setPostUser(savedUser);
-        entityManager.merge(post1);
         entityManager.merge(post2);
         entityManager.merge(post3);
+        entityManager.merge(post1);
         entityManager.flush();
         //act
         List<Post> found = postRepository.findByPostUser_Id(generatedId);
