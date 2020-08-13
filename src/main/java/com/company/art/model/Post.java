@@ -2,20 +2,13 @@ package com.company.art.model;
 
 import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
-
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 

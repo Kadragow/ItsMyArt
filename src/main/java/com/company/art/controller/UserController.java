@@ -6,19 +6,16 @@ import com.company.art.model.User;
 import com.company.art.service.PostService;
 import com.company.art.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,15 +47,6 @@ public class UserController {
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
-
-//    @RequestMapping(value = "/home", method = RequestMethod.POST)
-//    public ModelAndView addingPost(){
-//        ModelAndView modelAndView = new ModelAndView();
-//        Post post = new Post();
-//        modelAndView.addObject("post", post);
-//        modelAndView.setViewName("/home/addingPost");
-//        return modelAndView;
-//    }
 
     @PostMapping(value="/home/addPost")
     public String addPost(Post post, RedirectAttributes redirectAttributes) throws Exception {

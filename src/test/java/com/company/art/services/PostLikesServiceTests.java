@@ -2,7 +2,6 @@ package com.company.art.services;
 
 import com.company.art.ArtApplication;
 import com.company.art.FakeDataSet;
-import com.company.art.model.Post;
 import com.company.art.model.PostLikes;
 import com.company.art.repository.PostLikesRepository;
 import com.company.art.service.PostLikesService;
@@ -18,9 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import javax.persistence.EntityNotFoundException;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

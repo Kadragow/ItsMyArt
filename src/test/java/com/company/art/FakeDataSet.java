@@ -4,7 +4,6 @@ import com.company.art.model.Post;
 import com.company.art.model.User;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class FakeDataSet {
     public static User getFakeUser(){
