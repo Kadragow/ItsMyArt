@@ -5,7 +5,7 @@
     <title th:text="${user.userName}"></title>
 </head>
 <body>
-<th:block th:include="/_menu"></th:block>
+<th:block th:include="_menu"></th:block>
 <br/>
 <div class="profile" style="text-align:center">
     <h1 th:text="Profile + ' ' + ${user.userName} + ' - ' + ${user.name} + ' ' + ${user.lastName}"></h1>
